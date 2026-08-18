@@ -48,7 +48,7 @@
 }
 
 * { box-sizing: border-box; }
-html, body { height: 100%; }
+html, body { height: 100%; overflow-x: hidden; } /* jaring pengaman: cegah scroll horizontal di seluruh halaman */
 body {
   margin: 0;
   background: var(--ink);
@@ -202,4 +202,16 @@ button { font-family: inherit; }
 }
 @media (max-width: 480px) {
   .grid-4, .grid-3, .grid-2 { grid-template-columns: 1fr; }
+}
+
+/* Grup kontrol (dropdown/tombol) di sebelah judul halaman — dipakai di
+   Budget, dan halaman lain yang punya beberapa kontrol berjajar. Wajib
+   melipat di layar sempit supaya tidak mendorong seluruh halaman scroll
+   ke samping. */
+.control-group {
+  display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+}
+@media (max-width: 480px) {
+  .control-group { width: 100%; }
+  .control-group select { flex: 1 1 auto; min-width: 0; }
 }

@@ -12,7 +12,7 @@ var PageBudget = {
     root.innerHTML = '\
       <div class="content-header">\
         <h1>Budget Bulanan</h1>\
-        <div style="display:flex;gap:8px;align-items:center">\
+        <div class="control-group">\
           <select id="bMonth" class="mono"></select>\
           <select id="bYear" class="mono"></select>\
           <button class="btn btn-ghost btn-sm" id="btnAddBudget">+ Budget Baru</button>\

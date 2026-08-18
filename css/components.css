@@ -37,8 +37,9 @@
   font-size: 11px; text-transform: uppercase; letter-spacing: 0.12em; color: var(--on-navy-dim);
 }
 .hero-value {
-  font-family: var(--font-mono); font-size: 44px; font-weight: 600;
+  font-family: var(--font-mono); font-size: clamp(26px, 8vw, 44px); font-weight: 600;
   margin-top: 6px; letter-spacing: -0.01em; color: var(--on-navy);
+  overflow-wrap: break-word; word-break: break-word;
 }
 .hero-value.money-pos { color: #6FE3A8; }
 .hero-value.money-neg { color: #F0958A; }
@@ -147,15 +148,23 @@ table.ledger tr:hover td { background: rgba(11,37,69,0.025); }
 table.ledger td.num, table.ledger th.num { text-align: right; font-family: var(--font-mono); }
 
 /* Progress bar (budget) -------------------------------------------------------- */
-.progress-row { display: flex; align-items: center; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--ink-line); }
+.progress-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--ink-line); flex-wrap: wrap; }
 .progress-row:last-child { border-bottom: none; }
 .progress-name { flex: 0 0 140px; font-size: 13px; color: var(--ink-text); }
-.progress-track { flex: 1; height: 6px; border-radius: 3px; background: var(--ink-3); overflow: hidden; }
+.progress-track { flex: 1; height: 6px; border-radius: 3px; background: var(--ink-3); overflow: hidden; min-width: 60px; }
 .progress-fill { height: 100%; border-radius: 3px; background: var(--ledger-green); transition: width 0.3s ease; }
 .progress-fill.warning { background: var(--amber); }
 .progress-fill.near_limit { background: var(--orange); }
 .progress-fill.over_budget { background: var(--ledger-red); }
 .progress-figures { flex: 0 0 auto; font-family: var(--font-mono); font-size: 12px; color: var(--ink-text-dim); white-space: nowrap; }
+
+@media (max-width: 600px) {
+  .progress-row { row-gap: 8px; }
+  .progress-name { flex: 1 1 auto; order: 1; }
+  .progress-row .stamp { order: 2; }
+  .progress-track { order: 4; flex: 1 1 100%; }
+  .progress-figures { order: 3; margin-left: auto; }
+}
 
 /* Form --------------------------------------------------------------------------- */
 .field { margin-bottom: 14px; }
