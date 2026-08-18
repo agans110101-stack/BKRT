@@ -6,7 +6,7 @@
  * (lihat apps-script/README.md langkah 3).
  */
 
-var API_BASE_URL = 'GANTI_DENGAN_WEB_APP_URL_KAMU';
+var API_BASE_URL = 'https://script.google.com/macros/s/AKfycbx0N2TXLPTNGpPxb_zFtP7qKS89AllpHygAbO2MSYhjmd63MaT7RctmTofVvXWjhEJcaQ/exec';
 
 var Api = (function () {
   function getToken() {
