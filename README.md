@@ -3,6 +3,8 @@
 Vanilla JS + HTML + CSS, single page app (hash routing), Chart.js untuk grafik.
 Tidak butuh build step apapun — cukup file statis.
 
+Bangun dulu backend nya di google script kamu
+
 ## 1. Sambungkan ke Backend
 Buka `js/api.js`, ganti baris pertama:
 ```js
