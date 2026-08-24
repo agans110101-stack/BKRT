@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Buku Kas — Keuangan Rumah Tangga</title>
+<link rel="stylesheet" href="css/main.css">
+<link rel="stylesheet" href="css/components.css">
+<!-- Chart.js di-bundle lokal (bukan CDN) supaya tidak gagal kalau jaringan/browser
+     memblokir domain CDN eksternal. File: js/vendor/chart.umd.js (v4.4.8). -->
+<script src="js/vendor/chart.umd.js"></script>
+</head>
+<body>
+
+<!-- State & utils -->
+<script src="js/state.js"></script>
+<script src="js/api.js"></script>
+
+<!-- Components -->
+<script src="js/components/icons.js"></script>
+<script src="js/components/toast.js"></script>
+<script src="js/components/modal.js"></script>
+<script src="js/components/charts.js"></script>
+<script src="js/components/quickAdd.js"></script>
+
+<!-- Pages -->
+<script src="js/pages/login.js"></script>
+<script src="js/pages/dashboard.js"></script>
+<script src="js/pages/income.js"></script>
+<script src="js/pages/infaq.js"></script>
+<script src="js/pages/expense.js"></script>
+<script src="js/pages/transfer.js"></script>
+<script src="js/pages/budget.js"></script>
+<script src="js/pages/investment.js"></script>
+<script src="js/pages/debtReceivable.js"></script>
+<script src="js/pages/accounts.js"></script>
+<script src="js/pages/reports.js"></script>
+
+<!-- Router (paling akhir, menjalankan boot()) -->
+<script src="js/router.js"></script>
+</body>
+</html>

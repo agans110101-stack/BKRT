@@ -1,0 +1,85 @@
+/**
+ * expense.js
+ */
+var PageExpense = {
+  async render(root) {
+    root.innerHTML = '<div class="content-header"><h1>Expense</h1></div><div class="skeleton" style="height:300px"></div>';
+    await Promise.all([Store.ensureAccounts(), Store.ensureCategories()]);
+
+    var allRows;
+    try { allRows = await Api.expenses({}); } catch (e) { Toast.error(e.message); return; }
+
+    var totalThisMonth = allRows.filter(function (r) {
+      var d = new Date(r.date), now = new Date();
+      return d.getMonth() === now.getMonth() && d.getFullYear() === now.getFullYear() && r.status !== 'REVERSED';
+    }).reduce(function (s, r) { return s + Number(r.amount); }, 0);
+
+    var expenseCats = Store.categoriesByType('EXPENSE');
+
+    root.innerHTML = '\
+      <div class="content-header">\
+        <h1>Expense</h1>\
+        <div class="card" style="padding:10px 16px"><div class="card-label" style="margin-bottom:2px">Bulan Ini</div><div class="money money-neg" style="font-size:16px">' + formatRupiah(totalThisMonth) + '</div></div>\
+      </div>\
+      <div class="control-group" style="margin-bottom:16px">\
+        <div class="field" style="margin-bottom:0"><label>' + Icons.misc('filter', 12) + ' Bulan</label><input type="month" id="filter-month"></div>\
+        <div class="field" style="margin-bottom:0"><label>Kategori</label><select id="filter-cat"><option value="">Semua Kategori</option>' + expenseCats.map(function (c) { return '<option value="' + c.categoryId + '">' + c.name + '</option>'; }).join('') + '</select></div>\
+        <div class="field" style="margin-bottom:0"><label>Kantong</label><select id="filter-acc"><option value="">Semua Kantong</option>' + Store.accounts.map(function (a) { return '<option value="' + a.accountId + '">' + a.name + '</option>'; }).join('') + '</select></div>\
+        <button class="btn btn-ghost btn-sm" id="btnResetFilter" style="align-self:flex-end">Reset</button>\
+      </div>\
+      <div class="card"><div class="table-wrap"><table class="ledger">\
+        <thead><tr><th>Tanggal</th><th>Kategori</th><th>Kantong</th><th>Catatan</th><th class="num">Jumlah</th><th></th></tr></thead>\
+        <tbody id="expense-body"></tbody>\
+        <tfoot><tr><td colspan="4" style="text-align:right;font-weight:600">Total (sesuai filter)</td><td class="num money money-neg" id="expense-total" style="font-weight:600"></td><td></td></tr></tfoot>\
+      </table></div></div>';
+
+    var tbody = root.querySelector('#expense-body');
+    var totalEl = root.querySelector('#expense-total');
+    var monthEl = root.querySelector('#filter-month');
+    var catEl = root.querySelector('#filter-cat');
+    var accEl = root.querySelector('#filter-acc');
+
+    function applyFilters_() {
+      var rows = allRows;
+      if (monthEl.value) rows = rows.filter(function (r) { return (r.date || '').slice(0, 7) === monthEl.value; });
+      if (catEl.value) rows = rows.filter(function (r) { return r.categoryId === catEl.value; });
+      if (accEl.value) rows = rows.filter(function (r) { return r.accountId === accEl.value; });
+      draw(rows);
+    }
+
+    function draw(rows) {
+      if (!rows.length) {
+        tbody.innerHTML = '<tr><td colspan="6"><div class="empty"><div class="empty-title">Tidak ada data</div>Coba ubah filter, atau tekan tombol + untuk menambah.</div></td></tr>';
+        totalEl.textContent = formatRupiah(0);
+        return;
+      }
+      tbody.innerHTML = rows.map(function (r) {
+        var reversed = r.status === 'REVERSED';
+        return '<tr' + (reversed ? ' style="opacity:.45;text-decoration:line-through"' : '') + '>\
+          <td>' + formatDateShort(r.date) + '</td>\
+          <td>' + Icons.category(Store.categoryName(r.categoryId), 14) + ' ' + Store.categoryName(r.categoryId) + '</td>\
+          <td>' + Store.accountName(r.accountId) + '</td>\
+          <td>' + (r.description || '-') + '</td>\
+          <td class="num money money-neg">-' + formatRupiah(r.amount) + '</td>\
+          <td>' + (reversed ? '' : '<button class="btn btn-ghost btn-sm" data-reverse-expense="' + r.expenseId + '" style="text-decoration:none">Batalkan</button>') + '</td>\
+        </tr>';
+      }).join('');
+
+      var total = rows.filter(function (r) { return r.status !== 'REVERSED'; }).reduce(function (s, r) { return s + Number(r.amount); }, 0);
+      totalEl.textContent = formatRupiah(total);
+
+      tbody.querySelectorAll('[data-reverse-expense]').forEach(function (btn) {
+        btn.onclick = function () { confirmReverse_('expense', btn.dataset.reverseExpense, function () { PageExpense.render(root); }); };
+      });
+    }
+
+    draw(allRows);
+    monthEl.onchange = applyFilters_;
+    catEl.onchange = applyFilters_;
+    accEl.onchange = applyFilters_;
+    root.querySelector('#btnResetFilter').onclick = function () {
+      monthEl.value = ''; catEl.value = ''; accEl.value = '';
+      draw(allRows);
+    };
+  }
+};
