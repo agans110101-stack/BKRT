@@ -1,0 +1,217 @@
+/* ==========================================================================
+   main.css — Design tokens & layout
+   Tema: Navy & White — clean, korporat, tapi tetap pakai identitas "buku
+   kas": angka tabular mono, sidebar navy solid, kartu putih bersih dengan
+   border tipis (bukan shadow tebal), aksen biru terang untuk CTA/status.
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Spectral:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap');
+
+:root {
+  /* Permukaan (surface) --------------------------------------------------- */
+  --ink: #F2F9FC;         /* latar halaman utama, tint biru muda dari 8ECAE6 */
+  --ink-2: #FFFFFF;       /* kartu, modal, tabel, drawer */
+  --ink-3: #E8F4F9;       /* input field, skeleton, track progress bar */
+  --ink-line: #D3E7EF;    /* border tipis di atas permukaan putih */
+
+  /* Navy — dipakai khusus untuk sidebar/hero/bottom-nav (blok solid navy) */
+  --paper: #023047;       /* navy utama, dari palet */
+  --paper-dim: #0B4162;   /* navy sedikit lebih terang, untuk hover di atas navy */
+
+  /* Teks -------------------------------------------------------------------- */
+  --ink-text: #0F2A3D;         /* teks utama di atas permukaan putih */
+  --ink-text-dim: #5B7A8C;     /* teks sekunder di atas permukaan putih */
+  --on-navy: #FFFFFF;          /* teks di atas blok navy */
+  --on-navy-dim: #9FCFE0;      /* teks sekunder di atas blok navy (tint 8ECAE6) */
+
+  /* Aksen & semantik ---------------------------------------------------------- */
+  --brass: #219EBC;       /* aksen utama: CTA, link, active state — biru dari palet */
+  --brass-dim: #17748A;   /* varian lebih gelap aksen (border, hover) */
+  --ledger-red: #C0392B;
+  --ledger-red-dim: #8E2A20;
+  --ledger-green: #1E8A58;
+  --ledger-green-dim: #156643;
+  --amber: #FFB703;       /* severity: warning */
+  --orange: #FB8500;      /* severity: near limit */
+  --sky: #8ECAE6;         /* tint biru muda untuk highlight lembut */
+
+  /* Tipografi ------------------------------------------------------------ */
+  --font-display: 'Spectral', Georgia, serif;
+  --font-mono: 'IBM Plex Mono', 'Courier New', monospace;
+  --font-sans: 'IBM Plex Sans', -apple-system, Helvetica, Arial, sans-serif;
+
+  /* Layout ---------------------------------------------------------------- */
+  --sidebar-w: 240px;
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --shadow-card: 0 1px 2px rgba(2,48,71,0.06), 0 4px 16px -4px rgba(2,48,71,0.10);
+}
+
+* { box-sizing: border-box; }
+html, body { height: 100%; overflow-x: hidden; } /* jaring pengaman: cegah scroll horizontal di seluruh halaman */
+body {
+  margin: 0;
+  background: var(--ink);
+  color: var(--ink-text);
+  font-family: var(--font-sans);
+  font-size: 14px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; }
+}
+
+h1, h2, h3 { font-family: var(--font-display); font-weight: 600; margin: 0; color: var(--ink-text); }
+h1 { font-size: 28px; letter-spacing: -0.01em; }
+h2 { font-size: 20px; }
+h3 { font-size: 16px; }
+
+.mono { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+.money { font-family: var(--font-mono); font-variant-numeric: tabular-nums; font-weight: 500; }
+.money-pos { color: var(--ledger-green); }
+.money-neg { color: var(--ledger-red); }
+
+a { color: inherit; }
+button { font-family: inherit; }
+
+:focus-visible {
+  outline: 2px solid var(--brass);
+  outline-offset: 2px;
+}
+
+/* App shell -------------------------------------------------------------- */
+#app {
+  display: flex;
+  min-height: 100vh;
+}
+
+.sidebar {
+  width: var(--sidebar-w);
+  flex-shrink: 0;
+  background: var(--paper);
+  border-right: 1px solid var(--paper-dim);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: 24px 0;
+}
+/* Garis "punggung buku" — jahitan titik-titik di tepi sidebar */
+.sidebar::after {
+  content: '';
+  position: absolute;
+  right: -1px; top: 0; bottom: 0; width: 1px;
+  background-image: linear-gradient(rgba(255,255,255,0.18) 50%, transparent 0%);
+  background-size: 1px 8px;
+  opacity: 0.6;
+}
+
+.brand {
+  padding: 0 24px 20px;
+  border-bottom: 1px solid var(--paper-dim);
+  margin-bottom: 12px;
+}
+.brand-title { font-family: var(--font-display); font-size: 18px; color: var(--on-navy); letter-spacing: 0.02em; }
+.brand-sub { font-size: 11px; color: var(--on-navy-dim); text-transform: uppercase; letter-spacing: 0.08em; margin-top: 4px; }
+
+.nav { list-style: none; margin: 0; padding: 0; flex: 1; }
+.nav-item a {
+  display: flex; align-items: center; gap: 10px;
+  padding: 10px 24px;
+  color: var(--on-navy-dim);
+  text-decoration: none;
+  font-size: 13.5px;
+  border-left: 2px solid transparent;
+  transition: color 0.15s ease, border-color 0.15s ease, background 0.15s ease;
+}
+.nav-item a:hover { color: var(--on-navy); background: rgba(255,255,255,0.06); }
+.nav-item a.active {
+  color: var(--on-navy);
+  border-left-color: var(--brass);
+  background: rgba(33,158,188,0.30);
+}
+
+.main {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.topbar {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 20px 32px;
+  background: var(--ink-2);
+  border-bottom: 1px solid var(--ink-line);
+}
+.topbar-greeting { font-size: 12px; color: var(--ink-text-dim); text-transform: uppercase; letter-spacing: 0.08em; }
+.topbar-date { font-family: var(--font-mono); font-size: 13px; color: var(--ink-text-dim); margin-top: 2px; }
+
+.content {
+  padding: 32px;
+  flex: 1;
+  overflow-y: auto;
+}
+
+.content-header {
+  display: flex; align-items: baseline; justify-content: space-between;
+  margin-bottom: 24px;
+  flex-wrap: wrap; gap: 12px;
+}
+
+/* Ledger rule texture di belakang grid kartu ringkasan -------------------- */
+.ledger-bg {
+  background-image: repeating-linear-gradient(
+    to bottom, transparent, transparent 27px, rgba(11,37,69,0.04) 28px
+  );
+  border-radius: var(--radius-md);
+  padding: 4px;
+}
+
+/* Grid utilities ----------------------------------------------------------- */
+.grid { display: grid; gap: 16px; }
+.grid-4 { grid-template-columns: repeat(4, 1fr); }
+.grid-3 { grid-template-columns: repeat(3, 1fr); }
+.grid-2 { grid-template-columns: repeat(2, 1fr); }
+
+/* Bottom nav (mobile) -------------------------------------------------------- */
+.bottom-nav {
+  display: none;
+  position: fixed; left: 0; right: 0; bottom: 0;
+  background: var(--paper);
+  border-top: 1px solid var(--paper-dim);
+  padding: 6px 4px calc(6px + env(safe-area-inset-bottom));
+  z-index: 40;
+}
+.bottom-nav-inner { display: flex; overflow-x: auto; gap: 4px; }
+.bottom-nav a {
+  flex: 0 0 auto; min-width: 64px;
+  display: flex; flex-direction: column; align-items: center; gap: 3px;
+  padding: 6px 8px; border-radius: var(--radius-sm);
+  color: var(--on-navy-dim); text-decoration: none; font-size: 10px;
+}
+.bottom-nav a.active { color: var(--on-navy); background: rgba(33,158,188,0.38); }
+
+@media (max-width: 860px) {
+  .sidebar { display: none; }
+  .bottom-nav { display: block; }
+  .content { padding: 20px 16px 84px; }
+  .topbar { padding: 16px 20px; }
+  .grid-4, .grid-3, .grid-2 { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 480px) {
+  .grid-4, .grid-3, .grid-2 { grid-template-columns: 1fr; }
+}
+
+/* Grup kontrol (dropdown/tombol) di sebelah judul halaman — dipakai di
+   Budget, dan halaman lain yang punya beberapa kontrol berjajar. Wajib
+   melipat di layar sempit supaya tidak mendorong seluruh halaman scroll
+   ke samping. */
+.control-group {
+  display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+}
+@media (max-width: 480px) {
+  .control-group { width: 100%; }
+  .control-group select { flex: 1 1 auto; min-width: 0; }
+}

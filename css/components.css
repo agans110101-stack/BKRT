@@ -1,0 +1,273 @@
+/* ==========================================================================
+   components.css — Tema Navy & White
+   ========================================================================== */
+
+/* Card --------------------------------------------------------------------- */
+.card {
+  background: var(--ink-2);
+  border: 1px solid var(--ink-line);
+  border-radius: var(--radius-md);
+  padding: 18px 20px;
+  box-shadow: var(--shadow-card);
+}
+.card-label {
+  font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em;
+  color: var(--ink-text-dim); margin-bottom: 8px;
+}
+.card-value { font-size: 24px; color: var(--ink-text); }
+.card-sub { font-size: 12px; color: var(--ink-text-dim); margin-top: 6px; }
+
+/* Hero: Total Saldo — satu-satunya blok navy solid di dalam konten -------- */
+.hero {
+  background: var(--paper);
+  border: 1px solid var(--paper-dim);
+  border-radius: var(--radius-md);
+  padding: 28px 32px;
+  margin-bottom: 20px;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute; inset: 0;
+  background-image: repeating-linear-gradient(to bottom, transparent, transparent 31px, rgba(255,255,255,0.035) 32px);
+  pointer-events: none;
+}
+.hero-label {
+  font-size: 11px; text-transform: uppercase; letter-spacing: 0.12em; color: var(--on-navy-dim);
+}
+.hero-value {
+  font-family: var(--font-mono); font-size: clamp(26px, 8vw, 44px); font-weight: 600;
+  margin-top: 6px; letter-spacing: -0.01em; color: var(--on-navy);
+  overflow-wrap: break-word; word-break: break-word;
+}
+.hero-value.money-pos { color: #6FE3A8; }
+.hero-value.money-neg { color: #F0958A; }
+.hero-value::after {
+  content: ''; display: block; width: 64px; height: 2px; background: var(--brass);
+  margin-top: 12px; opacity: 0.9;
+}
+.hero-meta { display: flex; gap: 24px; margin-top: 16px; flex-wrap: wrap; }
+.hero-meta-item { font-size: 12px; color: var(--on-navy-dim); }
+.hero-meta-item .money { display: block; font-size: 15px; color: var(--on-navy); margin-top: 2px; }
+.hero-meta-item .money.money-neg { color: #F0958A; }
+
+/* Stamp badge (signature element) ------------------------------------------- */
+.stamp {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 4px 10px 4px 8px;
+  border: 1.5px dashed currentColor;
+  border-radius: 999px;
+  font-family: var(--font-mono);
+  font-size: 10.5px; letter-spacing: 0.06em; text-transform: uppercase;
+  transform: rotate(-2deg);
+  white-space: nowrap;
+}
+.stamp::before { content: '\25cf'; font-size: 8px; }
+.stamp-safe { color: var(--ledger-green); }
+.stamp-warning { color: #B8860B; }
+.stamp-warning-bg { background: rgba(255,183,3,0.15); }
+.stamp-near_limit { color: #C2600A; }
+.stamp-over_budget, .stamp-overdue { color: var(--ledger-red); }
+.stamp-paid { color: var(--ledger-green); }
+.stamp-unpaid, .stamp-partial { color: #B8860B; }
+
+@keyframes stamp-in {
+  0% { transform: rotate(-2deg) scale(1.6); opacity: 0; }
+  60% { transform: rotate(-2deg) scale(0.95); opacity: 1; }
+  100% { transform: rotate(-2deg) scale(1); }
+}
+.stamp-animate { animation: stamp-in 0.32s ease-out; }
+
+/* Button --------------------------------------------------------------------- */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  padding: 10px 18px;
+  border-radius: var(--radius-sm);
+  border: 1px solid transparent;
+  font-size: 13.5px; font-weight: 500;
+  cursor: pointer;
+  transition: filter 0.15s ease, transform 0.12s ease, background 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+}
+.btn:hover { transform: translateY(-1px) scale(1.015); box-shadow: 0 6px 14px -6px rgba(2,48,71,0.28); }
+.btn:active { transform: translateY(1px) scale(0.98); box-shadow: none; }
+.btn-primary { background: var(--brass); color: #FFFFFF; }
+.btn-primary:hover { filter: brightness(1.1); }
+.btn-ghost { background: transparent; color: var(--ink-text); border-color: var(--ink-line); }
+.btn-ghost:hover { border-color: var(--brass); background: rgba(46,90,172,0.06); }
+.btn-danger { background: transparent; color: var(--ledger-red); border-color: var(--ledger-red); }
+.btn-danger:hover { background: rgba(192,57,43,0.08); }
+.btn-block { width: 100%; }
+.btn-sm { padding: 6px 12px; font-size: 12.5px; }
+.btn[disabled] { opacity: 0.5; cursor: not-allowed; }
+
+.sidebar .btn-ghost {
+  color: var(--on-navy-dim);
+  border-color: rgba(255,255,255,0.25);
+}
+.sidebar .btn-ghost:hover {
+  color: var(--on-navy);
+  background: rgba(192,57,43,0.25);
+  border-color: var(--ledger-red);
+}
+
+.fab {
+  position: fixed; right: 24px; bottom: 24px; z-index: 30;
+  width: 56px; height: 56px; border-radius: 50%;
+  background: var(--brass); color: #FFFFFF;
+  border: none; font-size: 26px; cursor: pointer;
+  box-shadow: 0 8px 20px -6px rgba(11,37,69,0.35);
+  transition: transform 0.15s ease, box-shadow 0.15s ease, filter 0.15s ease;
+}
+.fab:hover { transform: scale(1.08); box-shadow: 0 10px 24px -6px rgba(11,37,69,0.45); filter: brightness(1.08); }
+.fab:active { transform: scale(0.96); }
+@media (max-width: 860px) { .fab { bottom: 78px; } }
+
+/* Accounts / "kantong" row ---------------------------------------------------- */
+.pouch-row { display: flex; gap: 12px; overflow-x: auto; padding-bottom: 4px; }
+.pouch {
+  flex: 0 0 auto; min-width: 160px;
+  background: var(--ink-2); border: 1px solid var(--ink-line); border-radius: var(--radius-md);
+  padding: 14px 16px; cursor: pointer; text-decoration: none; color: inherit;
+  box-shadow: var(--shadow-card);
+  transition: border-color 0.15s ease, transform 0.1s ease;
+}
+.pouch:hover { border-color: var(--brass); transform: translateY(-2px); }
+.pouch-name { font-size: 12px; color: var(--ink-text-dim); margin-bottom: 6px; }
+.pouch-balance { font-family: var(--font-mono); font-size: 17px; color: var(--ink-text); }
+
+/* Table ------------------------------------------------------------------------ */
+.table-wrap { overflow-x: auto; }
+table.ledger { width: 100%; border-collapse: collapse; font-size: 13px; }
+table.ledger th {
+  text-align: left; padding: 10px 12px; font-size: 11px; text-transform: uppercase;
+  letter-spacing: 0.06em; color: var(--ink-text-dim); border-bottom: 1px solid var(--ink-line);
+}
+table.ledger td { padding: 10px 12px; border-bottom: 1px solid var(--ink-line); color: var(--ink-text); }
+table.ledger tr:hover td { background: rgba(11,37,69,0.025); }
+table.ledger td.num, table.ledger th.num { text-align: right; font-family: var(--font-mono); }
+
+/* Progress bar (budget) -------------------------------------------------------- */
+.progress-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--ink-line); flex-wrap: wrap; }
+.progress-row:last-child { border-bottom: none; }
+.progress-name { flex: 0 0 140px; font-size: 13px; color: var(--ink-text); }
+.progress-track { flex: 1; height: 6px; border-radius: 3px; background: var(--ink-3); overflow: hidden; min-width: 60px; }
+.progress-fill { height: 100%; border-radius: 3px; background: var(--ledger-green); transition: width 0.3s ease; }
+.progress-fill.warning { background: var(--amber); }
+.progress-fill.near_limit { background: var(--orange); }
+.progress-fill.over_budget { background: var(--ledger-red); }
+.progress-figures { flex: 0 0 auto; font-family: var(--font-mono); font-size: 12px; color: var(--ink-text-dim); white-space: nowrap; }
+
+@media (max-width: 600px) {
+  .progress-row { row-gap: 8px; }
+  .progress-name { flex: 1 1 auto; order: 1; }
+  .progress-row .stamp { order: 2; }
+  .progress-track { order: 4; flex: 1 1 100%; }
+  .progress-figures { order: 3; margin-left: auto; }
+  .progress-row .btn { order: 5; flex: 1 1 100%; }
+}
+.progress-name svg { margin-right: 2px; }
+
+/* Infaq: grid kolom tetap supaya status/jumlah/tombol sejajar walau baris
+   DONE tidak punya tombol (kolom tetap "ada" tapi kosong). */
+.col-infaq { padding-left: 32px !important; }
+.infaq-cell {
+  display: grid;
+  grid-template-columns: 84px 96px 1fr;
+  align-items: center;
+  column-gap: 10px;
+}
+.infaq-cell .stamp { justify-self: start; }
+.infaq-amt { text-align: right; }
+.infaq-action { justify-self: start; display: flex; align-items: center; gap: 8px; }
+.infaq-action .infaq-check { width: 16px; height: 16px; accent-color: var(--brass); cursor: pointer; }
+@media (max-width: 480px) {
+  .infaq-cell { grid-template-columns: 74px 84px 1fr; column-gap: 6px; }
+}
+
+/* Form --------------------------------------------------------------------------- */
+.field { margin-bottom: 14px; }
+.field label { display: block; font-size: 12px; color: var(--ink-text-dim); margin-bottom: 6px; }
+.field input, .field select, .field textarea {
+  width: 100%; padding: 10px 12px;
+  background: var(--ink-3); border: 1px solid var(--ink-line); border-radius: var(--radius-sm);
+  color: var(--ink-text); font-family: var(--font-sans); font-size: 13.5px;
+}
+.field input:focus, .field select:focus, .field textarea:focus {
+  border-color: var(--brass); background: var(--ink-2);
+}
+.field-row { display: flex; gap: 12px; }
+.field-row .field { flex: 1; }
+.field-error { color: var(--ledger-red); font-size: 12px; margin-top: 4px; }
+
+/* Tabs (Quick Add transaction type) ------------------------------------------------ */
+.tabs { display: flex; gap: 4px; margin-bottom: 18px; flex-wrap: wrap; }
+.tab {
+  padding: 7px 14px; border-radius: 999px; font-size: 12.5px; cursor: pointer;
+  background: var(--ink-3); color: var(--ink-text-dim); border: 1px solid transparent;
+}
+.tab.active { background: rgba(46,90,172,0.12); color: var(--brass); border-color: var(--brass); }
+
+/* Modal / Drawer --------------------------------------------------------------------- */
+.overlay {
+  position: fixed; inset: 0; background: rgba(11,21,38,0.5);
+  display: flex; align-items: flex-end; justify-content: center;
+  z-index: 50; opacity: 0; pointer-events: none; transition: opacity 0.2s ease;
+}
+.overlay.open { opacity: 1; pointer-events: auto; }
+.drawer {
+  background: var(--ink-2); border: 1px solid var(--ink-line); border-bottom: none;
+  border-radius: 16px 16px 0 0;
+  width: 100%; max-width: 480px;
+  max-height: 88vh; overflow-y: auto;
+  padding: 24px 24px calc(24px + env(safe-area-inset-bottom));
+  transform: translateY(24px); transition: transform 0.22s ease;
+  box-shadow: 0 -8px 30px -6px rgba(11,37,69,0.25);
+}
+.overlay.open .drawer { transform: translateY(0); }
+.drawer-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
+.drawer-close { background: none; border: none; color: var(--ink-text-dim); font-size: 20px; cursor: pointer; }
+
+@media (min-width: 640px) {
+  .overlay { align-items: center; }
+  .drawer { border-radius: var(--radius-md); border-bottom: 1px solid var(--ink-line); }
+}
+
+/* Toast ----------------------------------------------------------------------------- */
+#toast-root { position: fixed; top: 20px; right: 20px; z-index: 60; display: flex; flex-direction: column; gap: 8px; }
+.toast {
+  background: var(--ink-2); border: 1px solid var(--ink-line); border-left: 3px solid var(--brass);
+  border-radius: var(--radius-sm); padding: 12px 16px; font-size: 13px; min-width: 220px;
+  color: var(--ink-text);
+  box-shadow: var(--shadow-card);
+  animation: toast-in 0.2s ease;
+}
+.toast.error { border-left-color: var(--ledger-red); }
+.toast.success { border-left-color: var(--ledger-green); }
+@keyframes toast-in { from { opacity: 0; transform: translateX(12px); } to { opacity: 1; transform: translateX(0); } }
+
+/* Empty state -------------------------------------------------------------------------- */
+.empty { text-align: center; padding: 48px 20px; color: var(--ink-text-dim); }
+.empty-title { font-family: var(--font-display); font-size: 16px; color: var(--ink-text); margin-bottom: 6px; }
+
+/* Login page ------------------------------------------------------------------------------- */
+.login-shell {
+  min-height: 100vh; display: flex; align-items: center; justify-content: center;
+  background: var(--paper); padding: 20px;
+}
+.login-card {
+  width: 100%; max-width: 360px;
+  background: var(--ink-2); border: 1px solid var(--ink-line); border-radius: var(--radius-md);
+  padding: 32px 28px; box-shadow: 0 12px 40px -8px rgba(0,0,0,0.35);
+}
+.login-brand { text-align: center; margin-bottom: 24px; }
+.login-brand-title { font-family: var(--font-display); font-size: 22px; color: var(--paper); }
+.login-brand-sub { font-size: 11px; color: var(--ink-text-dim); text-transform: uppercase; letter-spacing: 0.1em; margin-top: 6px; }
+
+/* Chart container ----------------------------------------------------------------------------- */
+.chart-card { background: var(--ink-2); border: 1px solid var(--ink-line); border-radius: var(--radius-md); padding: 18px 20px; box-shadow: var(--shadow-card); }
+.chart-card canvas { max-height: 260px; }
+
+/* Loading skeleton ----------------------------------------------------------------------------- */
+.skeleton { background: linear-gradient(90deg, var(--ink-3) 25%, #E3EAF4 37%, var(--ink-3) 63%); background-size: 400% 100%; animation: skeleton 1.4s ease infinite; border-radius: var(--radius-sm); }
+@keyframes skeleton { 0% { background-position: 100% 50%; } 100% { background-position: 0 50%; } }
