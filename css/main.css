@@ -1,39 +1,41 @@
 /* ==========================================================================
    main.css — Design tokens & layout
-   Tema: Navy & White — clean, korporat, tapi tetap pakai identitas "buku
-   kas": angka tabular mono, sidebar navy solid, kartu putih bersih dengan
-   border tipis (bukan shadow tebal), aksen biru terang untuk CTA/status.
+   Tema: "Segar & Biru Muda" — dasar putih/biru pucat, sidebar putih dengan
+   pill aktif solid teal, kartu besar membulat, aksen warna cerah (teal,
+   sky, amber, oranye) untuk kartu ringkasan. Identitas "buku kas" tetap
+   dijaga lewat angka tabular mono dan konvensi hijau/merah untuk +/-.
    ========================================================================== */
 
-@import url('https://fonts.googleapis.com/css2?family=Spectral:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Spectral:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap');
 
 :root {
   /* Permukaan (surface) --------------------------------------------------- */
-  --ink: #F2F9FC;         /* latar halaman utama, tint biru muda dari 8ECAE6 */
-  --ink-2: #FFFFFF;       /* kartu, modal, tabel, drawer */
-  --ink-3: #E8F4F9;       /* input field, skeleton, track progress bar */
-  --ink-line: #D3E7EF;    /* border tipis di atas permukaan putih */
+  --ink: #EAF6FB;         /* latar halaman utama — tint biru muda dari 8ECAE6 */
+  --ink-2: #FFFFFF;       /* kartu, modal, tabel, drawer, sidebar */
+  --ink-3: #F1F9FC;       /* input field, skeleton, track progress bar */
+  --ink-line: #DCEEF5;    /* border tipis / pemisah halus */
 
-  /* Navy — dipakai khusus untuk sidebar/hero/bottom-nav (blok solid navy) */
+  /* Navy — dipakai untuk hero & teks judul, bukan lagi blok solid sidebar */
   --paper: #023047;       /* navy utama, dari palet */
-  --paper-dim: #0B4162;   /* navy sedikit lebih terang, untuk hover di atas navy */
+  --paper-dim: #0B4162;   /* navy sedikit lebih terang */
 
   /* Teks -------------------------------------------------------------------- */
-  --ink-text: #0F2A3D;         /* teks utama di atas permukaan putih */
-  --ink-text-dim: #5B7A8C;     /* teks sekunder di atas permukaan putih */
-  --on-navy: #FFFFFF;          /* teks di atas blok navy */
-  --on-navy-dim: #9FCFE0;      /* teks sekunder di atas blok navy (tint 8ECAE6) */
+  --ink-text: #0F2A3D;         /* teks utama */
+  --ink-text-dim: #5E7C8C;     /* teks sekunder */
+  --on-navy: #FFFFFF;          /* teks di atas blok navy/gradient gelap */
+  --on-navy-dim: #BFE1EE;      /* teks sekunder di atas blok navy/gradient gelap */
 
   /* Aksen & semantik ---------------------------------------------------------- */
-  --brass: #219EBC;       /* aksen utama: CTA, link, active state — biru dari palet */
-  --brass-dim: #17748A;   /* varian lebih gelap aksen (border, hover) */
-  --ledger-red: #C0392B;
-  --ledger-red-dim: #8E2A20;
+  --brass: #219EBC;       /* warna utama: CTA, link, nav aktif — teal/biru muda */
+  --brass-dim: #17869F;   /* varian lebih gelap aksen (hover) */
+  --brass-soft: #E4F5FA;  /* varian sangat pucat aksen (chip, hover tint) */
+  --ledger-red: #DC4C40;
+  --ledger-red-dim: #B93A2F;
   --ledger-green: #1E8A58;
   --ledger-green-dim: #156643;
-  --amber: #FFB703;       /* severity: warning */
-  --orange: #FB8500;      /* severity: near limit */
-  --sky: #8ECAE6;         /* tint biru muda untuk highlight lembut */
+  --amber: #FFB703;       /* severity: warning / kartu investasi */
+  --orange: #FB8500;      /* severity: near limit / kartu expense */
+  --sky: #8ECAE6;         /* biru muda kedua — gradient, chip, chart */
 
   /* Tipografi ------------------------------------------------------------ */
   --font-display: 'Spectral', Georgia, serif;
@@ -41,10 +43,12 @@
   --font-sans: 'IBM Plex Sans', -apple-system, Helvetica, Arial, sans-serif;
 
   /* Layout ---------------------------------------------------------------- */
-  --sidebar-w: 240px;
-  --radius-sm: 4px;
-  --radius-md: 8px;
-  --shadow-card: 0 1px 2px rgba(2,48,71,0.06), 0 4px 16px -4px rgba(2,48,71,0.10);
+  --sidebar-w: 248px;
+  --radius-sm: 10px;
+  --radius-md: 16px;
+  --radius-lg: 22px;
+  --shadow-card: 0 1px 2px rgba(2,48,71,0.04), 0 10px 28px -14px rgba(2,48,71,0.16);
+  --shadow-pop: 0 10px 24px -8px rgba(2,48,71,0.22);
 }
 
 * { box-sizing: border-box; }
@@ -65,7 +69,7 @@ body {
 
 h1, h2, h3 { font-family: var(--font-display); font-weight: 600; margin: 0; color: var(--ink-text); }
 h1 { font-size: 28px; letter-spacing: -0.01em; }
-h2 { font-size: 20px; }
+h2 { font-size: 19px; }
 h3 { font-size: 16px; }
 
 .mono { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
@@ -90,46 +94,40 @@ button { font-family: inherit; }
 .sidebar {
   width: var(--sidebar-w);
   flex-shrink: 0;
-  background: var(--paper);
-  border-right: 1px solid var(--paper-dim);
+  background: var(--ink-2);
+  border-right: 1px solid var(--ink-line);
   position: relative;
   display: flex;
   flex-direction: column;
   padding: 24px 0;
 }
-/* Garis "punggung buku" — jahitan titik-titik di tepi sidebar */
-.sidebar::after {
-  content: '';
-  position: absolute;
-  right: -1px; top: 0; bottom: 0; width: 1px;
-  background-image: linear-gradient(rgba(255,255,255,0.18) 50%, transparent 0%);
-  background-size: 1px 8px;
-  opacity: 0.6;
-}
 
 .brand {
-  padding: 0 24px 20px;
-  border-bottom: 1px solid var(--paper-dim);
-  margin-bottom: 12px;
+  padding: 0 20px 20px;
+  margin-bottom: 8px;
 }
-.brand-title { font-family: var(--font-display); font-size: 18px; color: var(--on-navy); letter-spacing: 0.02em; }
-.brand-sub { font-size: 11px; color: var(--on-navy-dim); text-transform: uppercase; letter-spacing: 0.08em; margin-top: 4px; }
+.brand-title { font-family: var(--font-display); font-size: 19px; letter-spacing: -0.01em; }
+.brand-title .b-1 { color: var(--brass); }
+.brand-title .b-2 { color: var(--paper); }
+.brand-sub { font-size: 11.5px; color: var(--ink-text-dim); margin-top: 4px; }
 
-.nav { list-style: none; margin: 0; padding: 0; flex: 1; }
+.nav { list-style: none; margin: 0; padding: 0 12px; flex: 1; }
+.nav-item { margin-bottom: 2px; }
 .nav-item a {
   display: flex; align-items: center; gap: 10px;
-  padding: 10px 24px;
-  color: var(--on-navy-dim);
+  padding: 10px 14px;
+  border-radius: var(--radius-sm);
+  color: var(--ink-text-dim);
   text-decoration: none;
   font-size: 13.5px;
-  border-left: 2px solid transparent;
-  transition: color 0.15s ease, border-color 0.15s ease, background 0.15s ease;
+  font-weight: 500;
+  transition: color 0.15s ease, background 0.15s ease;
 }
-.nav-item a:hover { color: var(--on-navy); background: rgba(255,255,255,0.06); }
+.nav-item a:hover { color: var(--brass-dim); background: var(--brass-soft); }
 .nav-item a.active {
-  color: var(--on-navy);
-  border-left-color: var(--brass);
-  background: rgba(33,158,188,0.30);
+  color: #FFFFFF;
+  background: var(--brass);
+  box-shadow: 0 6px 14px -6px rgba(33,158,188,0.55);
 }
 
 .main {
@@ -142,31 +140,28 @@ button { font-family: inherit; }
 .topbar {
   display: flex; align-items: center; justify-content: space-between;
   padding: 20px 32px;
-  background: var(--ink-2);
-  border-bottom: 1px solid var(--ink-line);
+  background: transparent;
 }
-.topbar-greeting { font-size: 12px; color: var(--ink-text-dim); text-transform: uppercase; letter-spacing: 0.08em; }
-.topbar-date { font-family: var(--font-mono); font-size: 13px; color: var(--ink-text-dim); margin-top: 2px; }
+.topbar-greeting { font-size: 17px; font-weight: 600; color: var(--ink-text); font-family: var(--font-display); }
+.topbar-date { font-size: 12.5px; color: var(--ink-text-dim); margin-top: 3px; }
+.topbar-avatar {
+  width: 40px; height: 40px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--brass), var(--sky));
+  color: #fff; display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-display); font-weight: 600; font-size: 15px;
+  flex-shrink: 0;
+}
 
 .content {
-  padding: 32px;
+  padding: 8px 32px 32px;
   flex: 1;
   overflow-y: auto;
 }
 
 .content-header {
   display: flex; align-items: baseline; justify-content: space-between;
-  margin-bottom: 24px;
+  margin-bottom: 20px;
   flex-wrap: wrap; gap: 12px;
-}
-
-/* Ledger rule texture di belakang grid kartu ringkasan -------------------- */
-.ledger-bg {
-  background-image: repeating-linear-gradient(
-    to bottom, transparent, transparent 27px, rgba(11,37,69,0.04) 28px
-  );
-  border-radius: var(--radius-md);
-  padding: 4px;
 }
 
 /* Grid utilities ----------------------------------------------------------- */
@@ -179,24 +174,25 @@ button { font-family: inherit; }
 .bottom-nav {
   display: none;
   position: fixed; left: 0; right: 0; bottom: 0;
-  background: var(--paper);
-  border-top: 1px solid var(--paper-dim);
+  background: var(--ink-2);
+  border-top: 1px solid var(--ink-line);
   padding: 6px 4px calc(6px + env(safe-area-inset-bottom));
   z-index: 40;
+  box-shadow: 0 -6px 20px -10px rgba(2,48,71,0.18);
 }
 .bottom-nav-inner { display: flex; overflow-x: auto; gap: 4px; }
 .bottom-nav a {
   flex: 0 0 auto; min-width: 64px;
   display: flex; flex-direction: column; align-items: center; gap: 3px;
   padding: 6px 8px; border-radius: var(--radius-sm);
-  color: var(--on-navy-dim); text-decoration: none; font-size: 10px;
+  color: var(--ink-text-dim); text-decoration: none; font-size: 10px;
 }
-.bottom-nav a.active { color: var(--on-navy); background: rgba(33,158,188,0.38); }
+.bottom-nav a.active { color: var(--brass); background: var(--brass-soft); }
 
 @media (max-width: 860px) {
   .sidebar { display: none; }
   .bottom-nav { display: block; }
-  .content { padding: 20px 16px 84px; }
+  .content { padding: 16px 16px 84px; }
   .topbar { padding: 16px 20px; }
   .grid-4, .grid-3, .grid-2 { grid-template-columns: repeat(2, 1fr); }
 }
