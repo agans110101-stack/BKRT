@@ -247,6 +247,20 @@ table.ledger td.num, table.ledger th.num { text-align: right; font-family: var(-
 .field-row .field { flex: 1; }
 .field-error { color: var(--ledger-red); font-size: 12px; margin-top: 4px; }
 
+/* Search box (Income/Expense, dll) --------------------------------------------- */
+.search-field { flex: 1 1 220px; }
+.search-box { position: relative; display: flex; align-items: center; }
+.search-box svg { position: absolute; left: 12px; color: var(--ink-text-dim); pointer-events: none; }
+.search-box input { padding-left: 34px; }
+.search-box .search-clear {
+  position: absolute; right: 8px;
+  width: 20px; height: 20px; border-radius: 50%;
+  border: none; background: var(--ink-line); color: var(--ink-text-dim);
+  font-size: 12px; line-height: 1; cursor: pointer;
+  display: none; align-items: center; justify-content: center;
+}
+.search-box.has-value .search-clear { display: flex; }
+
 /* Tabs (Quick Add transaction type) ------------------------------------------------ */
 .tabs { display: flex; gap: 4px; margin-bottom: 18px; flex-wrap: wrap; }
 .tab {
