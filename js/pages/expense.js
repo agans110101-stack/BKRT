@@ -22,6 +22,7 @@ var PageExpense = {
         <div class="card" style="padding:10px 16px"><div class="card-label" style="margin-bottom:2px">Bulan Ini</div><div class="money money-neg" style="font-size:16px">' + formatRupiah(totalThisMonth) + '</div></div>\
       </div>\
       <div class="control-group" style="margin-bottom:16px">\
+        <div class="field search-field" style="margin-bottom:0"><label>Cari</label><div class="search-box">' + Icons.misc('search', 14) + '<input type="text" id="filter-search" placeholder="Cari kategori, kantong, catatan..."><button type="button" class="search-clear" id="btnClearSearch">&times;</button></div></div>\
         <div class="field" style="margin-bottom:0"><label>' + Icons.misc('filter', 12) + ' Bulan</label><input type="month" id="filter-month"></div>\
         <div class="field" style="margin-bottom:0"><label>Kategori</label><select id="filter-cat"><option value="">Semua Kategori</option>' + expenseCats.map(function (c) { return '<option value="' + c.categoryId + '">' + c.name + '</option>'; }).join('') + '</select></div>\
         <div class="field" style="margin-bottom:0"><label>Kantong</label><select id="filter-acc"><option value="">Semua Kantong</option>' + Store.accounts.map(function (a) { return '<option value="' + a.accountId + '">' + a.name + '</option>'; }).join('') + '</select></div>\
@@ -35,6 +36,8 @@ var PageExpense = {
 
     var tbody = root.querySelector('#expense-body');
     var totalEl = root.querySelector('#expense-total');
+    var searchEl = root.querySelector('#filter-search');
+    var searchClearBtn = root.querySelector('#btnClearSearch');
     var monthEl = root.querySelector('#filter-month');
     var catEl = root.querySelector('#filter-cat');
     var accEl = root.querySelector('#filter-acc');
@@ -44,6 +47,14 @@ var PageExpense = {
       if (monthEl.value) rows = rows.filter(function (r) { return (r.date || '').slice(0, 7) === monthEl.value; });
       if (catEl.value) rows = rows.filter(function (r) { return r.categoryId === catEl.value; });
       if (accEl.value) rows = rows.filter(function (r) { return r.accountId === accEl.value; });
+      var q = (searchEl.value || '').trim().toLowerCase();
+      searchEl.parentElement.classList.toggle('has-value', !!q);
+      if (q) {
+        rows = rows.filter(function (r) {
+          var haystack = [Store.categoryName(r.categoryId), Store.accountName(r.accountId), r.description].join(' ').toLowerCase();
+          return haystack.indexOf(q) !== -1;
+        });
+      }
       draw(rows);
     }
 
@@ -77,8 +88,11 @@ var PageExpense = {
     monthEl.onchange = applyFilters_;
     catEl.onchange = applyFilters_;
     accEl.onchange = applyFilters_;
+    searchEl.oninput = applyFilters_;
+    searchClearBtn.onclick = function () { searchEl.value = ''; searchEl.focus(); applyFilters_(); };
     root.querySelector('#btnResetFilter').onclick = function () {
-      monthEl.value = ''; catEl.value = ''; accEl.value = '';
+      monthEl.value = ''; catEl.value = ''; accEl.value = ''; searchEl.value = '';
+      searchEl.parentElement.classList.remove('has-value');
       draw(allRows);
     };
   }
