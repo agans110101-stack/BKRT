@@ -30,13 +30,14 @@ var Router = (function () {
     document.body.innerHTML = '\
       <div id="app">\
         <aside class="sidebar">\
-          <div class="brand"><div class="brand-title">Buku Kas</div><div class="brand-sub">Keuangan Rumah Tangga</div></div>\
+          <div class="brand"><div class="brand-title"><span class="b-1">Buku</span><span class="b-2"> Kas</span></div><div class="brand-sub">Keuangan Rumah Tangga</div></div>\
           <ul class="nav" id="nav-list"></ul>\
-          <div style="padding:0 24px"><button class="btn btn-ghost btn-sm btn-block" id="btnLogout">Keluar</button></div>\
+          <div style="padding:0 12px"><button class="btn btn-ghost btn-sm btn-block" id="btnLogout">Keluar</button></div>\
         </aside>\
         <div class="main">\
           <div class="topbar">\
-            <div><div class="topbar-greeting">Assalamualaikum' + (Store.user && Store.user.name ? ', ' + Store.user.name : '') + '</div><div class="topbar-date" id="topbar-date"></div></div>\
+            <div><div class="topbar-greeting">Assalamualaikum' + (Store.user && Store.user.name ? ', ' + Store.user.name : '') + ' \uD83D\uDC4B</div><div class="topbar-date" id="topbar-date"></div></div>\
+            <div class="topbar-avatar">' + ((Store.user && Store.user.name ? Store.user.name : 'U').trim().charAt(0).toUpperCase()) + '</div>\
           </div>\
           <div class="content" id="content"></div>\
         </div>\
