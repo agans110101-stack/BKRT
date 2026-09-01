@@ -6,9 +6,9 @@ var Charts = (function () {
   var palette = {
     brass: '#219EBC',
     green: '#1E8A58',
-    red: '#C0392B',
-    grid: 'rgba(2,48,71,0.08)',
-    text: '#5B7A8C'
+    red: '#DC4C40',
+    grid: 'rgba(2,48,71,0.06)',
+    text: '#5E7C8C'
   };
 
   Chart.defaults.font.family = "'IBM Plex Mono', monospace";
@@ -21,8 +21,8 @@ var Charts = (function () {
       data: {
         labels: buckets.map(function (b) { return b.label; }),
         datasets: [
-          { label: 'Income', data: buckets.map(function (b) { return b.income; }), backgroundColor: palette.green, borderRadius: 3 },
-          { label: 'Expense', data: buckets.map(function (b) { return b.expense; }), backgroundColor: palette.red, borderRadius: 3 }
+          { label: 'Income', data: buckets.map(function (b) { return b.income; }), backgroundColor: palette.green, borderRadius: 6 },
+          { label: 'Expense', data: buckets.map(function (b) { return b.expense; }), backgroundColor: palette.red, borderRadius: 6 }
         ]
       },
       options: baseOptions_()
