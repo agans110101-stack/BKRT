@@ -64,6 +64,7 @@ var Router = (function () {
 
     document.getElementById('btnLogout').onclick = async function () {
       try { await Api.logout(); } catch (e) { /* abaikan, tetap logout di sisi klien */ }
+      Api.setUser(null);
       goToLogin();
     };
 
@@ -99,6 +100,7 @@ var Router = (function () {
 
   function goToLogin() {
     Api.setToken(null);
+    Api.setUser(null);
     Store.user = null;
     window.location.hash = '#/login';
     PageLogin.render(document.body);
@@ -108,6 +110,12 @@ var Router = (function () {
     if (!Api.getToken()) {
       goToLogin();
       return;
+    }
+    // Token masih ada (sesi lama) tapi Store.user di-memori sudah kosong
+    // (mis. setelah refresh halaman) -- pulihkan dari localStorage supaya
+    // sapaan & avatar di topbar tetap menampilkan nama yang benar.
+    if (!Store.user) {
+      Store.user = Api.getUser();
     }
     // Kalau hash masih menunjuk ke halaman login (mis. baru saja login sukses,
     // atau sesi baru pulih) tapi kita sudah punya token valid, arahkan ke

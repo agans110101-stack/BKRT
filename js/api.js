@@ -17,6 +17,21 @@ var Api = (function () {
     else localStorage.removeItem('hf_token');
   }
 
+  /**
+   * Simpan info user (userId, name, role) berdampingan dengan token supaya
+   * bisa dipulihkan saat halaman di-refresh -- Store.user cuma variabel di
+   * memori JS dan ikut hilang tiap reload, sedangkan token di localStorage
+   * tetap ada sehingga sesi tetap "login" tapi tanpa nama.
+   */
+  function getUser() {
+    try { return JSON.parse(localStorage.getItem('hf_user') || 'null'); }
+    catch (e) { return null; }
+  }
+  function setUser(user) {
+    if (user) localStorage.setItem('hf_user', JSON.stringify(user));
+    else localStorage.removeItem('hf_user');
+  }
+
   function get(action, params) {
     params = params || {};
     params.action = action;
@@ -61,6 +76,8 @@ var Api = (function () {
   return {
     getToken: getToken,
     setToken: setToken,
+    getUser: getUser,
+    setUser: setUser,
     get: get,
     post: post,
 
