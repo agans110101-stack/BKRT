@@ -23,10 +23,10 @@ var PageDashboard = {
         </div>\
       </div>\
       <div class="grid grid-4" style="margin-bottom:24px">\
-        ' + statCard_('Income Bulan Ini', data.incomeThisMonth, 'pos') + '\
-        ' + statCard_('Expense Bulan Ini', data.expenseThisMonth, 'neg') + '\
-        ' + statCard_('Cash Flow', data.cashFlow, data.cashFlow >= 0 ? 'pos' : 'neg') + '\
-        ' + statCard_('Total Investasi', data.totalInvestment, '') + '\
+        ' + statCard_('Income bulan ini', data.incomeThisMonth, 'teal', 'income') + '\
+        ' + statCard_('Expense bulan ini', data.expenseThisMonth, 'orange', 'expense') + '\
+        ' + statCard_('Cash flow', data.cashFlow, 'sky', data.cashFlow >= 0 ? 'income' : 'expense') + '\
+        ' + statCard_('Total investasi', data.totalInvestment, 'amber', 'investment') + '\
       </div>\
       <h2 style="margin-bottom:12px">Kantong</h2>\
       <div class="pouch-row" id="pouch-row" style="margin-bottom:28px"></div>\
@@ -59,9 +59,13 @@ var PageDashboard = {
   }
 };
 
-function statCard_(label, value, kind) {
-  var cls = kind === 'pos' ? 'money-pos' : kind === 'neg' ? 'money-neg' : '';
-  return '<div class="card"><div class="card-label">' + label + '</div><div class="card-value money ' + cls + '">' + formatRupiah(value) + '</div></div>';
+function statCard_(label, value, color, iconKey) {
+  color = color || 'teal';
+  return '<div class="card stat-card stat-' + color + '">\
+    <div class="stat-icon">' + Icons.nav(iconKey || 'wallet', 17) + '</div>\
+    <div class="card-label">' + label + '</div>\
+    <div class="card-value money">' + formatRupiah(value) + '</div>\
+  </div>';
 }
 
 function renderBudgetList_(host, budgets) {

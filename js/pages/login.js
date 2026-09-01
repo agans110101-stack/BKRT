@@ -10,7 +10,7 @@ var PageLogin = {
     shell.innerHTML = '\
       <div class="login-card">\
         <div class="login-brand">\
-          <div class="login-brand-title">Buku Kas</div>\
+          <div class="login-brand-title"><span class="b-1">Buku</span> Kas</div>\
           <div class="login-brand-sub">Keuangan Rumah Tangga</div>\
         </div>\
         <form id="login-form">\

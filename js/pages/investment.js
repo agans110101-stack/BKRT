@@ -19,7 +19,7 @@ var PageInvestment = {
         <button class="btn btn-ghost btn-sm" id="btnGoldPrice">Update Harga Emas</button>\
       </div>\
       <div class="grid grid-3" style="margin-bottom:24px">\
-        ' + statCard_('Total Nilai Investasi', totalValue, '') + '\
+        ' + statCard_('Total nilai investasi', totalValue, 'amber', 'investment') + '\
         <div class="card"><div class="card-label">Total Emas</div><div class="card-value mono">' + totalGoldWeight.toFixed(2) + ' gram</div></div>\
         <div class="card"><div class="card-label">Harga Emas Terakhir</div><div class="card-value money">' + (lastPrice ? formatRupiah(lastPrice) + '/gr' : '-') + '</div></div>\
       </div>\
