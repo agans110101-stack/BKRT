@@ -32,6 +32,7 @@ var PageLogin = {
         var res = await Api.login(fd.get('username'), fd.get('password'));
         Api.setToken(res.token);
         Store.user = { userId: res.userId, name: res.name, role: res.role };
+        Api.setUser(Store.user);
         document.body.classList.remove('is-login');
         window.location.hash = '#/dashboard';
         Router.boot();
