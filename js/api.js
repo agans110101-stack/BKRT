@@ -6,7 +6,7 @@
  * (lihat apps-script/README.md langkah 3).
  */
 
-var API_BASE_URL = 'https://script.google.com/macros/s/AKfycbwilU1Z-SosE7ov3LuhyIDOE6vmzpKKxnZkA1U6MEGM1VXjbkBOdK7erh7f6SKGLUAA/exec';
+var API_BASE_URL = 'https://script.google.com/macros/s/AKfycbwIY_bHbmNCsURXIPdxKuibI3-MYwoYJXvrJGq1QlC2LIsYxGyKNtPqOc0Fjnv3Xkb7pw/exec';
 
 var Api = (function () {
   function getToken() {
